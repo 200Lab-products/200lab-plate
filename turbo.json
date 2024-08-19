@@ -15,6 +15,7 @@
         "npm_config_user_agent",
         "https_proxy"
       ],
+      "cache": true,
       "outputs": ["dist/**", ".next/**"]
     },
     "build:watch": {

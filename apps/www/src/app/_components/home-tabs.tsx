@@ -10,7 +10,7 @@ import { parseAsBoolean, useQueryState } from 'nuqs';
 import { BlockPreview } from '@/components/block-preview';
 import { settingsStore } from '@/components/context/settings-store';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import PlaygroundDemo from '@/registry/default/example/playground-demo';
+import PlaygroundDemo from '@/registry/default/example/basic-plugins-components-demo';
 import { Button } from '@/registry/default/plate-ui/button';
 
 const InstallationTab = dynamic(() => import('./installation-tab'));

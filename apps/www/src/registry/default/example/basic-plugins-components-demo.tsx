@@ -8,12 +8,19 @@ import {
 } from '@udecode/plate-basic-marks';
 import { createBlockquotePlugin } from '@udecode/plate-block-quote';
 import { createCodeBlockPlugin } from '@udecode/plate-code-block';
-import { Plate, createPlugins } from '@udecode/plate-common';
+import {
+  Plate,
+  TElement,
+  createPlateEditor,
+  createPlugins,
+  deserializeHtml,
+} from '@udecode/plate-common';
 import { createHeadingPlugin } from '@udecode/plate-heading';
 import { createParagraphPlugin } from '@udecode/plate-paragraph';
 
 import { createPlateUI } from '@/plate/create-plate-ui';
 import { Editor } from '@/registry/default/plate-ui/editor';
+import { useMemo } from 'react';
 
 const plugins = createPlugins(
   [
@@ -36,8 +43,30 @@ const plugins = createPlugins(
 );
 
 export default function BasicPluginsComponentsDemo() {
+  let initialValue: any[] = [];
+
+  if (typeof document !== undefined) {
+    initialValue = useMemo(() => {
+      const tmpEditor = createPlateEditor({ plugins });
+      return deserializeHtml(tmpEditor, {
+        element: `<pre><code class="language-go">const http = require('http');
+  
+  const server = http.createServer((req, res) =&gt; {
+      res.statusCode = 200;
+      res.setHeader('Content-Type', 'text/plain');
+      res.end('Hello World\n');
+  });
+  
+  server.listen(3000, () =&gt; {
+      console.log('Server running at http://localhost:3000/');
+  });
+  </code></pre>`,
+      });
+    }, []);
+  }
+
   return (
-    <Plate initialValue={basicEditorValue} plugins={plugins}>
+    <Plate initialValue={initialValue as TElement[]} plugins={plugins}>
       <Editor autoFocus={false} placeholder="Type..." spellCheck={false} />
     </Plate>
   );

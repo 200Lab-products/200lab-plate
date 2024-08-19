@@ -8,6 +8,13 @@ export const deserializeHtmlCodeBlock: DeserializeHtml = {
       [...el.childNodes].find((node: ChildNode) => node.nodeName === 'SELECT')
         ?.textContent || '';
 
+    let codeClass = el.querySelector('code')?.getAttribute('class');
+    let langName = 'text';
+
+    if (codeClass) {
+      langName = codeClass.split(/language-([a-z]+)/)[1];
+    }
+
     const textContent = el.textContent?.replace(languageSelectorText, '') || '';
 
     let lines = textContent.split('\n');
@@ -24,6 +31,7 @@ export const deserializeHtmlCodeBlock: DeserializeHtml = {
     return {
       children: codeLines,
       type: ELEMENT_CODE_BLOCK,
+      lang: langName
     };
   },
   rules: [
